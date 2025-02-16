@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Speaker;
 use App\Traits\ApiResponseTrait;
-use Illuminate\Http\Request;
 
 class SpeakerController extends Controller
 {

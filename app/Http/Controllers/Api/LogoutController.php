@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LogoutController extends Controller
@@ -15,6 +15,7 @@ class LogoutController extends Controller
     {
         try {
             JWTAuth::invalidate(JWTAuth::getToken());
+
             return $this->successResponse(null, 'Logout berhasil');
         } catch (\Exception $e) {
             return $this->errorResponse(null, 'Logout gagal', 500);

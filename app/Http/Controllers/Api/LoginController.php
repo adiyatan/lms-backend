@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
@@ -14,8 +14,8 @@ class LoginController extends Controller
     public function __invoke(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email'     => 'required|email',
-            'password'  => 'required'
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -24,13 +24,13 @@ class LoginController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        if (!$token = auth()->guard('api')->attempt($credentials)) {
+        if (! $token = auth()->guard('api')->attempt($credentials)) {
             return $this->errorResponse(null, 'Email atau password salah', 401);
         }
 
         return $this->successResponse([
-            'user'  => auth()->guard('api')->user(),
-            'token' => $token
+            'user' => auth()->guard('api')->user(),
+            'token' => $token,
         ], 'Login berhasil');
     }
 }

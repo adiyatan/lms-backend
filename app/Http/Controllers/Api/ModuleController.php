@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Module;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Module;
 use App\Models\Speaker;
 use App\Traits\ApiResponseTrait;
+use Illuminate\Http\Request;
 
 class ModuleController extends Controller
 {
@@ -40,6 +40,7 @@ class ModuleController extends Controller
         ]);
 
         $module = Module::create($request->all());
+
         return $this->successResponse($module, 'Module created successfully', 201);
     }
 
@@ -47,7 +48,7 @@ class ModuleController extends Controller
     {
         $module = Module::with('speaker')->find($id);
 
-        if (!$module) {
+        if (! $module) {
             return $this->errorResponse(null, 'Module not found', 404);
         }
 
@@ -58,7 +59,7 @@ class ModuleController extends Controller
     {
         $module = Module::find($id);
 
-        if (!$module) {
+        if (! $module) {
             return $this->errorResponse(null, 'Module not found', 404);
         }
 
@@ -71,6 +72,7 @@ class ModuleController extends Controller
         ]);
 
         $module->update($request->all());
+
         return $this->successResponse($module, 'Module updated successfully');
     }
 
@@ -78,11 +80,12 @@ class ModuleController extends Controller
     {
         $module = Module::find($id);
 
-        if (!$module) {
+        if (! $module) {
             return $this->errorResponse(null, 'Module not found', 404);
         }
 
         $module->delete();
+
         return $this->successResponse(null, 'Module deleted successfully');
     }
 
