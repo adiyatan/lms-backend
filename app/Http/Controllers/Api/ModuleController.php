@@ -92,4 +92,11 @@ class ModuleController extends Controller
 
         return $this->successResponse($speaker, 'List of modules for the speaker');
     }
+
+    public function getAllModulesGroupLink(Request $request)
+    {
+        $modules = Module::whereNotNull('group_link')->get();
+
+        return $this->successResponse($modules, 'List of modules with group link');
+    }
 }

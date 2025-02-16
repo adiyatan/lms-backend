@@ -18,4 +18,5 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('modules', ModuleController::class);
     Route::get('/get-speaker-modules', [SpeakerController::class, 'getSpeakerModules']);
     Route::get('/get-all-users', [UserController::class, 'getAllUsers']);
+    Route::get('/get-all-modules-group-link', [ModuleController::class, 'getAllModulesGroupLink']);
 });
