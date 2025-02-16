@@ -7,6 +7,7 @@ use App\Models\Module;
 use App\Models\Speaker;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ModuleController extends Controller
 {
@@ -31,13 +32,17 @@ class ModuleController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'speaker_id' => 'nullable|exists:speakers,id',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'group_link' => 'nullable|string|max:255',
             'schedule' => 'nullable|date',
         ]);
+
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors()->all(), 'Validasi gagal', 422);
+        }
 
         $module = Module::create($request->all());
 
@@ -63,13 +68,17 @@ class ModuleController extends Controller
             return $this->errorResponse(null, 'Module not found', 404);
         }
 
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'speaker_id' => 'nullable|exists:speakers,id',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'group_link' => 'nullable|string|max:255',
             'schedule' => 'nullable|date',
         ]);
+
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors()->all(), 'Validasi gagal', 422);
+        }
 
         $module->update($request->all());
 
