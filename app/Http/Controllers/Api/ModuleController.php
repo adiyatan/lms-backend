@@ -19,12 +19,13 @@ class ModuleController extends Controller
         $search = $request->query('search');
         $perPage = $request->query('per_page', 10); // Default 10 items per page
 
-        // Query the modules with optional search
+        // Query the modules with optional search and order by creation date
         $modules = Module::with('speaker')
             ->when($search, function ($query, $search) {
                 $query->where('name', 'like', "%$search%")
                     ->orWhere('description', 'like', "%$search%");
             })
+            ->orderBy('created_at', 'desc') // Order by creation date
             ->paginate($perPage);
 
         return $this->successResponse($modules, 'List of modules with pagination and search');
